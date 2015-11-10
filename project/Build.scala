@@ -86,6 +86,18 @@ object build extends Build {
   lazy val scalazlawsJVM = scalazlaws.jvm
   lazy val scalazlawsRoot = project.aggregate(scalazlawsJS, scalazlawsJVM)
 
+  lazy val neko = module("neko").settings(
+    name := "neko",
+    libraryDependencies += "org.typelevel" %%% "cats-laws" % "0.4.1"
+  ).dependsOn(
+    core,
+    scalaprops % "test"
+  )
+
+  lazy val nekoJVM = neko.jvm
+  lazy val nekoJS = neko.js
+  lazy val nekoRoot = project.aggregate(nekoJS, nekoJVM)
+
   lazy val scalaprops = module(scalapropsName).settings(
     name := scalapropsName
   ).dependsOn(
@@ -104,10 +116,10 @@ object build extends Build {
   import UnidocKeys._
 
   private[this] lazy val jvmProjects = Seq[ProjectReference](
-    genJVM, coreJVM, scalapropsJVM, scalazlawsJVM
+    genJVM, coreJVM, scalapropsJVM, scalazlawsJVM, nekoJVM
   )
   private[this] lazy val jsProjects = Seq[ProjectReference](
-    genJS, coreJS, scalapropsJS, scalazlawsJS
+    genJS, coreJS, scalapropsJS, scalazlawsJS, nekoJS
   )
 
   val root = Project("root", file(".")).settings(

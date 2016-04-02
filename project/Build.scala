@@ -35,8 +35,9 @@ object build extends Build {
     Generator.settings
   ).settings(
     name := genName,
-    description := "pure functional random value generator",
-    libraryDependencies += "org.scalaz" %% "scalaz-core" % scalazVersion.value
+    description := "pure functional random value generator"
+  ).dependsOn(
+    ProjectRef(uri("git://github.com/xuwei-k/scalaz#177c95c1461c304078284ea581be6c1129abc1a6"), "concurrent")
   )
 
   lazy val core = module("core").settings(
@@ -50,7 +51,6 @@ object build extends Build {
   lazy val scalaprops = module(scalapropsName).settings(
     name := scalapropsName,
     libraryDependencies += "org.scala-sbt" % "test-interface" % "1.0",
-    libraryDependencies += "org.scalaz" %% "scalaz-concurrent" % scalazVersion.value,
     testFrameworks += new TestFramework("scalaprops.ScalapropsFramework"),
     parallelExecution in Test := false
   ).dependsOn(core, scalazlaws % "test")

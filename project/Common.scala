@@ -26,7 +26,7 @@ object Common {
   private[this] val Scala211 = "2.11.8"
 
   val commonSettings = scalaprops.ScalapropsPlugin.autoImport.scalapropsCoreSettings ++ Seq(
-    scalaVersion := Scala211,
+    scalaVersion := "2.12.0-M4",
     crossScalaVersions := "2.12.0-M3" :: Scala211 :: "2.10.6" :: Nil,
     organization := "com.github.scalaprops",
     description := "property based testing library for Scala",

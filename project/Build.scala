@@ -61,6 +61,7 @@ object build extends Build {
   lazy val gen = module("gen").settings(
     name := genName,
     description := "pure functional random value generator",
+    libraryDependencies += "com.slamdata" %% "matryoshka-core" % "0.9.0",
     libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value
   ).jvmSettings(
     Generator.settings: _*

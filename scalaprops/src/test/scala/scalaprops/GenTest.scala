@@ -38,6 +38,8 @@ object GenTest extends Scalaprops {
       }
     }
 
+  val genIsPlus = scalazlaws.plus.all[Gen]
+
   val testLaw =
     Properties.list(
       scalazlaws.monad.all[Gen],

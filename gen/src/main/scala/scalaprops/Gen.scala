@@ -332,14 +332,16 @@ object Gen extends GenInstances0 {
   def someOf[A](as: IList[A]): Gen[IList[A]] =
     choose(0, as.length).flatMap(i => pick(i, as))
 
-  implicit val instance: Monad[Gen] =
-    new Monad[Gen] {
+  implicit val instance: Monad[Gen] with Plus[Gen] =
+    new Monad[Gen] with Plus[Gen] {
       override def bind[A, B](fa: Gen[A])(f: A => Gen[B]) =
         fa flatMap f
       override def map[A, B](fa: Gen[A])(f: A => B) =
         fa map f
       override def point[A](a: => A) =
         Gen.value(a)
+      override def plus[A](a: Gen[A], b: => Gen[A]) =
+        Gen.oneOf(a, b)
     }
 
   implicit val genBoolean: Gen[Boolean] =
